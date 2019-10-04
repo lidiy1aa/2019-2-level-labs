@@ -2,45 +2,42 @@
 Labour work #1
 Count frequencies dictionary by the given arbitrary text
 """
-prohibited_marks = (',', '.', '\n', ':', ';', '#', '@', '$', '^', '&', '*', '%', '~', '"', '\'')
-
-
 def calculate_frequences(text):
-    def calculate_frequences(text):
-        if text == None:
-            print('None given')
+    prohibited_marks = (',', '.', '\n', ':', ';', '#', '@', '$', '^', '&', '*', '%', '~', '"', '\'')
+    if text == None:
+        print('None given')
+        freq_dict = {}
+        return freq_dict
+    else:
+        if type(text) is int:
+            print('The text is integer')
+            freq_dict = {}
+            return freq_dict
+        elif len(text) == 0:
+            print('The text is empty')
             freq_dict = {}
             return freq_dict
         else:
-            if type(text) is int:
-                print('The text is integer')
-                freq_dict = {}
-                return freq_dict
-            elif len(text) == 0:
-                print('The text is empty')
-                freq_dict = {}
-                return freq_dict
-            else:
-                freq_dict = {}
-                low_text = text.lower()
-                text_split = low_text.split()
-                res = []
-                for word in text_split:
-                    if not word.isdigit() and word not in prohibited_marks:
-                        clear_word = ''
-                        for c in word:
-                            if c not in prohibited_marks and not c.isdigit():
-                                clear_word += c
-                        if clear_word is not '':
-                            res.append(clear_word)
-                for word in res:
-                    count = freq_dict.get(word, 0)
-                    freq_dict[word] = count + 1
-                frequency_list = freq_dict.keys()
-                for words in frequency_list:
-                    print(words, freq_dict[words])
+            freq_dict = {}
+            low_text = text.lower()
+            text_split = low_text.split()
+            res = []
+            for word in text_split:
+                if not word.isdigit() and word not in prohibited_marks:
+                    clear_word = ''
+                    for c in word:
+                        if c not in prohibited_marks and not c.isdigit():
+                            clear_word += c
+                    if clear_word is not '':
+                        res.append(clear_word)
+            for word in res:
+                count = freq_dict.get(word, 0)
+                freq_dict[word] = count + 1
+            frequency_list = freq_dict.keys()
+            for words in frequency_list:
+                print(words, freq_dict[words])
 
-        return freq_dict
+    return freq_dict
     """
     Calculates number of times each word appears in the text
     """
