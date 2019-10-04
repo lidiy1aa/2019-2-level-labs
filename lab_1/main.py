@@ -2,9 +2,6 @@
 Labour work #1
 Count frequencies dictionary by the given arbitrary text
 """
-document = open('текст.txt', 'r')
-test = document.read()
-
 prohibited_marks = (',', '.', '\n', ':', ';', '#', '@', '$', '^', '&', '*', '%', '~', '"', '\'')
 
 
@@ -95,5 +92,11 @@ def get_top_n(new_frequency, top_n):
     """
     pass
 
-def close_file():
-    
+
+def read_from_file():
+    document = open('текст.txt', 'r')
+    test = document.read()
+
+
+def close_file(document):
+    document.close()
