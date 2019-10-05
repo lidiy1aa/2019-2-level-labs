@@ -5,7 +5,7 @@ Checks the first lab. Part about the getting n popular words
 
 import unittest
 
-from lab_1 import main
+import main
 
 
 class GetTopNTest(unittest.TestCase):

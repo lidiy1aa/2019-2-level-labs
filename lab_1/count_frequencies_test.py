@@ -5,7 +5,7 @@ Checks the first lab. Part about the creation of the frequencies dictionary
 
 import unittest
 
-from lab_1 import main
+import main
 
 SAMPLE_TEXT = "The quick brown fox jumps over the lazy dog"
 

@@ -5,7 +5,7 @@ Checks the first lab. Part about the creation of the frequencies dictionary
 
 import unittest
 
-from lab_1 import main
+import main
 
 
 STOP_WORDS = ('ourselves', 'hers', 'between', 'yourself', 'but', 'again', 'there', 'about',

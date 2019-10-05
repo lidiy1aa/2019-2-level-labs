@@ -74,7 +74,7 @@ def get_top_n(new_frequency, top_n):
     if new_frequency == {} or top_n <= 0:
         return ()
     else:
-        sorted_list = sorted(new_frequency.items(), key=lambda i: (i[1], i[0]), reverse=True)
+        sorted_list = sorted(new_frequency.items(), key=lambda i: i[1], reverse=True)
         final = []
         final = [element[0] for element in sorted_list]
         if top_n > len(final):
