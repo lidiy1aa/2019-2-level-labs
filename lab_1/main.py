@@ -54,7 +54,6 @@ def calculate_frequences(text):
             frequency_list = freq_dict.keys()
             for words in frequency_list:
                 print(words, freq_dict[words])
-
     return freq_dict
     """
     Calculates number of times each word appears in the text
