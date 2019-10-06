@@ -2,9 +2,27 @@
 Labour work #1
 Count frequencies dictionary by the given arbitrary text
 """
+lines_limit = 7
+
+
+def read_from_file(path_to_file, lines_limit):
+    doc = open(path_to_file, 'r')
+    test = ''
+    for i, line in enumerate(doc):
+        if i < lines_limit:
+            test += line
+        else:
+            break
+    return test
+    doc.close()
+
+
+read_from_file('data.txt', lines_limit)
+
+
 def calculate_frequences(text):
     prohibited_marks = (',', '.', '\n', ':', ';', '#', '@', '$', '^', '&', '*', '%', '~', '"', '\'')
-    if text == None:
+    if text is None:
         print('None given')
         freq_dict = {}
         return freq_dict
@@ -90,10 +108,8 @@ def get_top_n(new_frequency, top_n):
     pass
 
 
-def read_from_file():
-    document = open('текст.txt', 'r')
-    test = document.read()
-
-
-def close_file(document):
-    document.close()
+def write_to_file(path_to_file, content):
+    doc = open('report.txt', 'w')
+    for word in content:
+        doc.write(word + '\n')
+    doc.close()
