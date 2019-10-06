@@ -2,12 +2,12 @@
 Labour work #1
 Count frequencies dictionary by the given arbitrary text
 """
-lines_limit = 7
 
 
 def read_from_file(path_to_file, lines_limit):
     doc = open(path_to_file, 'r')
     test = ''
+    lines_limit = 7
     for i, line in enumerate(doc):
         if i < lines_limit:
             test += line
@@ -15,9 +15,6 @@ def read_from_file(path_to_file, lines_limit):
             break
     return test
     doc.close()
-
-
-read_from_file('data.txt', lines_limit)
 
 
 def calculate_frequences(text):
@@ -81,6 +78,7 @@ def filter_stop_words(freq_dict, stop_words):
                 print(new_frequency)
                 return new_frequency
     return new_frequency
+
     """
     Removes all stop words from the given frequencies dictionary
     """
