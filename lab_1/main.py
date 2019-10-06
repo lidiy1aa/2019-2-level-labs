@@ -109,7 +109,7 @@ def get_top_n(new_frequency, top_n):
 
 
 def write_to_file(path_to_file, content):
-    doc = open('report.txt', 'w')
+    doc = open(path_to_file, 'w')
     for word in content:
         doc.write(word + '\n')
     doc.close()
