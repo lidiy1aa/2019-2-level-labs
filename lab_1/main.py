@@ -5,16 +5,15 @@ Count frequencies dictionary by the given arbitrary text
 
 
 def read_from_file(path_to_file, lines_limit):
-    doc = open(path_to_file, 'r')
-    test = ''
-    lines_limit = 7
-    for i, line in enumerate(doc):
-        if i < lines_limit:
-            test += line
-        else:
-            break
-    return test
-    doc.close()
+    with open(path_to_file, 'r') as doc:
+        test = ''
+        lines_limit = 7
+        for i, line in enumerate(doc):
+            if i < lines_limit:
+                test += line
+            else:
+                break
+        return test
 
 
 def calculate_frequences(text):
