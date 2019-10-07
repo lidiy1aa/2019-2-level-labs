@@ -1,13 +1,6 @@
-"""
-Labour work #1
-Count frequencies dictionary by the given arbitrary text
-"""
-
-
 def read_from_file(path_to_file, lines_limit):
     with open(path_to_file, 'r') as doc:
         test = ''
-        lines_limit = 7
         for i, line in enumerate(doc):
             if i < lines_limit:
                 test += line
@@ -19,16 +12,13 @@ def read_from_file(path_to_file, lines_limit):
 def calculate_frequences(text):
     prohibited_marks = (',', '.', '\n', ':', ';', '#', '@', '$', '^', '&', '*', '%', '~', '"', '\'')
     if text is None:
-        print('None given')
         freq_dict = {}
         return freq_dict
     else:
         if type(text) is int:
-            print('The text is integer')
             freq_dict = {}
             return freq_dict
         elif len(text) == 0:
-            print('The text is empty')
             freq_dict = {}
             return freq_dict
         else:
@@ -51,19 +41,13 @@ def calculate_frequences(text):
             for words in frequency_list:
                 print(words, freq_dict[words])
     return freq_dict
-    """
-    Calculates number of times each word appears in the text
-    """
-    pass
 
 
 def filter_stop_words(freq_dict, stop_words):
     if stop_words is None or freq_dict is None or len(freq_dict) == 0:
-        print('Error')
         new_frequency = {}
         return new_frequency
     elif len(stop_words) == 0:
-        print(freq_dict)
         return freq_dict
     else:
         new_frequency = freq_dict.copy()
@@ -74,14 +58,8 @@ def filter_stop_words(freq_dict, stop_words):
         for key in new_frequency.keys():
             if key in stop_words or isinstance(key, int):
                 new_frequency.pop(key)
-                print(new_frequency)
                 return new_frequency
     return new_frequency
-
-    """
-    Removes all stop words from the given frequencies dictionary
-    """
-    pass
 
 
 def get_top_n(new_frequency, top_n):
@@ -89,19 +67,12 @@ def get_top_n(new_frequency, top_n):
         return ()
     else:
         sorted_list = sorted(new_frequency.items(), key=lambda i: i[1], reverse=True)
-        final = []
         final = [element[0] for element in sorted_list]
         if top_n > len(final):
             return tuple(final)
         elif len(final) >= top_n:
             final_top = final[:top_n]
-            print(tuple(final_top))
             return tuple(final_top)
-
-    """
-    Takes first N popular words
-    """
-    pass
 
 
 def write_to_file(path_to_file, content):
