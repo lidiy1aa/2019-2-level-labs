@@ -1,82 +1,95 @@
-def read_from_file(path_to_file, lines_limit):
-    with open(path_to_file, 'r') as doc:
-        test = ''
-        for i, line in enumerate(doc):
-            if i < lines_limit:
-                test += line
-            else:
-                break
-        return test
+"""
+Labour work #1
+Count frequencies dictionary by the given arbitrary text
+"""
 
 
-def calculate_frequences(text):
-    prohibited_marks = (',', '.', '\n', ':', ';', '#', '@', '$', '^', '&', '*', '%', '~', '"', '\'')
+def calculate_frequences(text: str) -> dict:
+    """
+    Calculates number of times each word appears in the text
+    """
+    frequencies = {}
+    new_text = ''
     if text is None:
-        freq_dict = {}
-        return freq_dict
-    else:
-        if type(text) is int:
-            freq_dict = {}
-            return freq_dict
-        elif len(text) == 0:
-            freq_dict = {}
-            return freq_dict
+        return frequencies
+    if not isinstance(text, str):
+        text = str(text)
+    for symbol in text:
+        if symbol.isalpha() or symbol == ' ':
+            new_text += symbol
+    new_text = new_text.lower()
+    words = new_text.split()
+    for key in words:
+        key = key.lower()
+        if key in frequencies:
+            value = frequencies[key]
+            frequencies[key] = value + 1
         else:
-            freq_dict = {}
-            low_text = text.lower()
-            text_split = low_text.split()
-            res = []
-            for word in text_split:
-                if not word.isdigit() and word not in prohibited_marks:
-                    clear_word = ''
-                    for c in word:
-                        if c not in prohibited_marks and not c.isdigit():
-                            clear_word += c
-                    if clear_word is not '':
-                        res.append(clear_word)
-            for word in res:
-                count = freq_dict.get(word, 0)
-                freq_dict[word] = count + 1
-            frequency_list = freq_dict.keys()
-            for words in frequency_list:
-                print(words, freq_dict[words])
-    return freq_dict
+            frequencies[key] = 1
+    return frequencies
 
 
-def filter_stop_words(freq_dict, stop_words):
-    if stop_words is None or freq_dict is None or len(freq_dict) == 0:
-        new_frequency = {}
-        return new_frequency
-    elif len(stop_words) == 0:
-        return freq_dict
-    else:
-        new_frequency = freq_dict.copy()
-        for stop_word in stop_words:
-            if isinstance(stop_word, str) and len(stop_word) > 0:
-                if new_frequency.get(stop_word):
-                    new_frequency.pop(stop_word)
-        for key in new_frequency.keys():
-            if key in stop_words or isinstance(key, int):
-                new_frequency.pop(key)
-                return new_frequency
-    return new_frequency
+def filter_stop_words(frequencies: dict, stop_words: tuple) -> dict:
+    """
+    Removes all stop words from the given frequencies dictionary
+    """
+    if frequencies is None:
+        frequencies = {}
+        return frequencies
+    for word in list(frequencies):
+        if not isinstance(word, str):
+            del frequencies[word]
+    if not isinstance(stop_words, tuple):
+        return frequencies
+    for word in stop_words:
+        if not isinstance(word, str):
+            continue
+        if frequencies.get(word) is not None:
+            del frequencies[word]
+    return frequencies
 
 
-def get_top_n(new_frequency, top_n):
-    if new_frequency == {} or top_n <= 0:
-        return ()
-    else:
-        sorted_list = sorted(new_frequency.items(), key=lambda i: i[1], reverse=True)
-        final = [element[0] for element in sorted_list]
-        if top_n > len(final):
-            return tuple(final)
-        elif len(final) >= top_n:
-            final_top = final[:top_n]
-            return tuple(final_top)
+def get_top_n(frequencies: dict, top_n: int) -> tuple:
+    """
+    Takes first N popular words
+    :param
+    """
+    if not isinstance(top_n, int):
+        frequencies = ()
+        return frequencies
+    if top_n < 0:
+        top_n = 0
+    elif top_n > len(frequencies):
+        top_n = len(frequencies)
+    top_words = sorted(frequencies, key=lambda x: int(frequencies[x]), reverse=True)
+    best = tuple(top_words[:top_n])
+    return best
 
 
-def write_to_file(path_to_file, content):
-    doc = open(path_to_file, 'w')
-    for word in content:
-        doc.write(word + '\n')
-    doc.close()
+def read_from_file(path_to_file: str, lines_limit: int) -> str:
+    """
+    Read text from file
+    """
+    file = open(path_to_file)
+    counter = 0
+    text = ''
+    if file is None:
+        return text
+    for line in file:
+        text += line
+        counter += 1
+        if counter == lines_limit:
+            break
+    file.close()
+    return text
+
+
+def write_to_file(path_to_file: str, content: tuple):
+    """
+    Creates new file
+    """
+    file = open(path_to_file, 'w')
+    for i in content:
+        file.write(i)
+        file.write('\n')
+    file.close()
