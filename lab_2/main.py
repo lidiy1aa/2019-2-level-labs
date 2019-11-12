@@ -9,9 +9,6 @@ def generate_edit_matrix(num_rows: int, num_cols: int) -> list:
     return edit_matrix
 
 
-matrix = generate_edit_matrix(7, 8)
-
-
 def initialize_edit_matrix(edit_matrix, add_weight, remove_weight):
     new_edit = list(edit_matrix)
     if new_edit is None or not new_edit or not new_edit[0]:
@@ -25,9 +22,6 @@ def initialize_edit_matrix(edit_matrix, add_weight, remove_weight):
                 if j != 0:
                     new_edit[0][j] = new_edit[0][j - 1] + add_weight
     return new_edit
-
-
-matrix_new = tuple(initialize_edit_matrix(tuple(matrix), 1, 1))
 
 
 def minimum_value(numbers):
@@ -58,9 +52,6 @@ def fill_edit_matrix(edit_matrix: tuple,
     return new_edit
 
 
-edited_matrix = fill_edit_matrix(tuple(matrix_new), 1, 1, 2, 'length', 'kitchen')
-
-
 def find_distance(original_word: str,
                   target_word: str,
                   add_weight: int,
@@ -79,13 +70,10 @@ def find_distance(original_word: str,
     return -1
 
 
-find_distance('length', 'kitchen', 1, 1, 2)
-
-
-def save_to_csv(path_to_file: str):
+def save_to_csv(edit_matrix, path_to_file: str):
     with open(path_to_file, 'w') as file:
         writer = csv.writer(file)
-        writer.writerows(edited_matrix)
+        writer.writerows(edit_matrix)
 
 
 def load_from_csv(path_to_file: str):
