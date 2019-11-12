@@ -15,10 +15,10 @@ def initialize_edit_matrix(edit_matrix, add_weight, remove_weight):
         return new_edit
     if isinstance(add_weight, int) and isinstance(remove_weight, int):
         new_edit[0][0] = 0
-        for el, i in enumerate(new_edit):
+        for i in range(1, len(new_edit)):
             if i != 0:
                 new_edit[i][0] = new_edit[i - 1][0] + remove_weight
-            for j in range(len(new_edit[0])):
+            for j in range(1, len(new_edit[0])):
                 if j != 0:
                     new_edit[0][j] = new_edit[0][j - 1] + add_weight
     return new_edit
@@ -82,4 +82,4 @@ def load_from_csv(path_to_file: str):
         reader = csv.reader(file)
         for row in reader:
             matrix.append(row)
-    return list(row)
+    return list(matrix)
