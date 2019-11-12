@@ -69,13 +69,13 @@ def find_distance(original_word: str,
     if isinstance(original_word, str) is True and isinstance(target_word, str) is True and \
         isinstance(remove_weight, int) is True and \
             isinstance(substitute_weight, int) is True and isinstance(add_weight, int) is True:
-            num_cols, num_rows = len(original_word) + 1, len(target_word) + 1
-            new_edit = tuple(initialize_edit_matrix(tuple(generate_edit_matrix(num_cols, num_rows)), add_weight,
-                                                    remove_weight))
-            final_matrix = fill_edit_matrix(new_edit, add_weight, remove_weight, substitute_weight, original_word,
-                                      target_word)
-            print(final_matrix[-1][-1])
-            return final_matrix[-1][-1]
+        num_cols, num_rows = len(original_word) + 1, len(target_word) + 1
+        new_edit = tuple(initialize_edit_matrix(tuple(generate_edit_matrix(num_cols, num_rows)), add_weight,
+                                                remove_weight))
+        final_matrix = fill_edit_matrix(new_edit, add_weight, remove_weight, substitute_weight, original_word,
+                                        target_word)
+        print(final_matrix[-1][-1])
+        return final_matrix[-1][-1]
     else:
         return -1
 
