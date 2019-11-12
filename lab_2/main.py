@@ -18,7 +18,7 @@ def initialize_edit_matrix(edit_matrix, add_weight, remove_weight):
         return new_edit
     elif isinstance(add_weight, int) and isinstance(remove_weight, int):
         new_edit[0][0] = 0
-        for i in range(len(new_edit)):
+        for el, i in enumerate(new_edit):
             if i != 0:
                 new_edit[i][0] = new_edit[i - 1][0] + remove_weight
             for j in range(len(new_edit[0])):
@@ -84,7 +84,7 @@ final = find_distance('length', 'kitchen', 1, 1, 2)
 
 
 def save_to_csv(path_to_file: str):
-    with open (path_to_file, 'w') as file:
+    with open(path_to_file, 'w') as file:
         writer = csv.writer(file)
         writer.writerows(edit)
     return None
@@ -93,6 +93,6 @@ def save_to_csv(path_to_file: str):
 def load_from_csv(path_to_file: str):
     with open(path_to_file, 'r') as file:
         reader = csv.reader(file)
-        for line in reader:
-            print(line)
-    return list(line)
+        for row in reader:
+            print(row)
+    return list(row)
