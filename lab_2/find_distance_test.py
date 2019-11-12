@@ -6,7 +6,7 @@ Checks the second lab. Part about the distance finding
 import unittest
 from unittest.mock import patch
 
-from lab_2 import main
+import main
 
 
 class FindDistanceTest(unittest.TestCase):
