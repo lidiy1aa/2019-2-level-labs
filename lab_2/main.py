@@ -3,7 +3,7 @@ import csv
 
 def generate_edit_matrix(num_rows: int, num_cols: int) -> list:
     if isinstance(num_rows, int) is True and isinstance(num_cols, int) is True:
-        edit_matrix = [[0] * num_cols for i in range(num_rows)]
+        edit_matrix = [[0] * num_cols for _ in range(num_rows)]
     else:
         edit_matrix = []
     return edit_matrix
@@ -15,7 +15,7 @@ def initialize_edit_matrix(edit_matrix, add_weight, remove_weight):
         return new_edit
     if isinstance(add_weight, int) and isinstance(remove_weight, int):
         new_edit[0][0] = 0
-        for i in range(0, len(new_edit)):
+        for el, i in enumerate(new_edit):
             if i != 0:
                 new_edit[i][0] = new_edit[i - 1][0] + remove_weight
             for j in range(len(new_edit[0])):
