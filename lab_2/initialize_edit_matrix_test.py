@@ -5,7 +5,7 @@ Checks the second lab. Part about the matrix initialization
 
 import unittest
 
-import main
+from lab_2 import main
 
 
 class InitializeEditMatrixTest(unittest.TestCase):

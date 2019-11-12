@@ -6,7 +6,7 @@ Checks the second lab. Part about the matrix filling
 import unittest
 from unittest.mock import patch
 
-import main
+from lab_2 import main
 
 
 class FillEditMatrixTest(unittest.TestCase):
