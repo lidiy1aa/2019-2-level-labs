@@ -18,7 +18,7 @@ def initialize_edit_matrix(edit_matrix, add_weight, remove_weight):
         return new_edit
     elif isinstance(add_weight, int) and isinstance(remove_weight, int):
         new_edit[0][0] = 0
-        for el, i in enumerate(new_edit):
+        for i in range(len(new_edit)):
             if i != 0:
                 new_edit[i][0] = new_edit[i - 1][0] + remove_weight
             for j in range(len(new_edit[0])):

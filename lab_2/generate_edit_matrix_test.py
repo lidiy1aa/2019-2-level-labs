@@ -5,7 +5,7 @@ Checks the second lab. Part about the matrix generation
 
 import unittest
 
-from lab_2 import main
+import main
 
 
 class GenerateEditMatrixTest(unittest.TestCase):
