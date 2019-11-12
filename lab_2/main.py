@@ -16,7 +16,7 @@ def initialize_edit_matrix(edit_matrix, add_weight, remove_weight):
     new_edit = list(edit_matrix)
     if new_edit is None or not new_edit or not new_edit[0]:
         return new_edit
-    elif isinstance(add_weight, int) and isinstance(remove_weight, int):
+    if isinstance(add_weight, int) and isinstance(remove_weight, int):
         new_edit[0][0] = 0
         for i in range(len(new_edit)):
             if i != 0:
@@ -58,7 +58,7 @@ def fill_edit_matrix(edit_matrix: tuple,
     return new_edit
 
 
-edit = fill_edit_matrix(tuple(matrix_new), 1, 1, 2, 'length', 'kitchen')
+edited_matrix = fill_edit_matrix(tuple(matrix_new), 1, 1, 2, 'length', 'kitchen')
 
 
 def find_distance(original_word: str,
@@ -76,17 +76,16 @@ def find_distance(original_word: str,
                                         target_word)
         print(final_matrix[-1][-1])
         return final_matrix[-1][-1]
-    else:
-        return -1
+    return -1
 
 
-final = find_distance('length', 'kitchen', 1, 1, 2)
+find_distance('length', 'kitchen', 1, 1, 2)
 
 
 def save_to_csv(path_to_file: str):
     with open(path_to_file, 'w') as file:
         writer = csv.writer(file)
-        writer.writerows(edit)
+        writer.writerows(edited_matrix)
     return None
 
 
@@ -94,5 +93,5 @@ def load_from_csv(path_to_file: str):
     with open(path_to_file, 'r') as file:
         reader = csv.reader(file)
         for row in reader:
-            print(row)
+            row.append()
     return list(row)
