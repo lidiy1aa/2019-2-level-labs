@@ -27,6 +27,8 @@ class WordStorage:
             for key, value in self.storage.items():
                 if key == word:
                     return value
+                else:
+                    return -1
         else:
             return -1
 
