@@ -93,28 +93,27 @@ class NGramTrie:
         return self.gram_log_probabilities
 
     def predict_next_sentence(self, prefix: tuple) -> list:
-        self.gram_log_probabilities = {(1, 2): -0.18, (1, 3): -1.79, (2, 3): -1, (2, 4): -2, (3, 4): -0.1,
-         (3, 5): -1.8}
-        new_list = []
+        word_1 = []
         if not isinstance(prefix, tuple) or len(prefix) + 1 != self.size:
             return []
-        else:
-            while True:
-                final = list(prefix)
-                for trie_gram in self.gram_log_probabilities.keys():
-                    if trie_gram[:-1] == prefix:
-                        new_list.append(self.gram_log_probabilities[trie_gram])
-                if not new_list:
-                    break
-                else:
-                    new_list = max(new_list)
-                    for word, probability in self.gram_log_probabilities.items():
-                        if new_list == probability:
-                            final.append(word[-1])
-                    print(final)
-                    return final
-                new_prefix = prefix[]
-            return final
+        final = list(prefix)
+        while True:
+            prob = []
+            for n_gram in list(self.gram_log_probabilities.keys()):
+                if n_gram[:-1] == prefix:
+                    prob.append(self.gram_log_probabilities[n_gram])
+            if not prob:
+                break
+            prob.sort(reverse=True)
+            prob = prob[0]
+            for word, probability in list(self.gram_log_probabilities.items()):
+                if prob == probability:
+                    word_1 = word[-1]
+            final.append(word_1)
+            pref_1 = list(prefix[1:])
+            pref_1.append(word_1)
+            prefix = tuple(pref_1)
+        return final
 
 
 def encode(storage_instance, corpus) -> list:
@@ -155,17 +154,20 @@ def split_by_sentence(text: str) -> list:
         for i, el in enumerate(edit_text):
             el.insert(0, s_first)
             el.append(s_last)
-        if edit_text[-1][-2]:
-            edit_text[-1][-2] = edit_text[-1][-2][:-1]
+            if edit_text[-1][-2]:
+                edit_text[-1][-2] = edit_text[-1][-2][:-1]
         return edit_text
     return []
 
 
-# corpus = split_by_sentence(str(f))
 # s = WordStorage
-# s.put()
-# encode(corpus)
-x = NGramTrie(2)
-# x.fill_from_sentence()
-# x.calculate_log_probabilities()
-x.predict_next_sentence((1,))
+# l = NGramTrie
+# sentences = split_by_sentence(REFERENCE_TEXT)
+# for sent in sentences:
+#    for word_ in sent:
+    #    s.put(word_)
+# sentences1 = encode(s, sentences)
+# for sent in sentences1:
+#    l.fill_from_sentence(sent)
+# l.calculate_log_probabilities()
+# l.predict_next_sentence((''))
