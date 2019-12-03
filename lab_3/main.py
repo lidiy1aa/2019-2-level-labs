@@ -159,13 +159,13 @@ def split_by_sentence(text: str) -> list:
 
 
 s = WordStorage
-l = NGramTrie
-sentences = split_by_sentence(REFERENCE_TEXT)
-for sent in sentences:
-    for word_ in sent:
-        s.put(word_)
-sentences1 = encode(s, sentences)
-for sent in sentences1:
-    l.fill_from_sentence(sent)
-l.calculate_log_probabilities()
-l.predict_next_sentence((''))
+NGr = NGramTrie
+# sentences = split_by_sentence(REFERENCE_TEXT)
+# for sent in sentences:
+  #  for word_ in sent:
+   #     s.put(word_)
+# sentences1 = encode(s, sentences)
+# for sent in sentences1:
+#    NGr.fill_from_sentence(sent)
+# NGr.calculate_log_probabilities()
+# NGr.predict_next_sentence((''))
