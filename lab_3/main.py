@@ -154,8 +154,8 @@ def split_by_sentence(text: str) -> list:
         for i, el in enumerate(edit_text):
             el.insert(0, s_first)
             el.append(s_last)
-            if edit_text[-1][-2]:
-                edit_text[-1][-2] = edit_text[-1][-2][:-1]
+        if edit_text[-1][-2]:
+            edit_text[-1][-2] = edit_text[-1][-2][:-1]
         return edit_text
     return []
 
