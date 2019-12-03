@@ -16,10 +16,10 @@ class WordStorage:
         self.storage = {}
 
     def put(self, word: str) -> int:
-        a = 0
+        number = 0
         if isinstance(word, str) and word not in self.storage:
             if word not in self.storage:
-                self.storage[word] = a
+                self.storage[word] = number
         return self.storage.get(word)
 
     def get_id_of(self, word: str) -> int:
@@ -27,8 +27,6 @@ class WordStorage:
             for key, value in self.storage.items():
                 if key == word:
                     return value
-            else:
-                return -1
         else:
             return -1
 
@@ -118,9 +116,9 @@ class NGramTrie:
 
 def encode(storage_instance, corpus) -> list:
     for sentence in corpus:
-        for i, el in enumerate(sentence):
+        for i, element in enumerate(sentence):
             for keyword, ind in storage_instance.items():
-                if el == keyword:
+                if element == keyword:
                     sentence[i] = ind
     return corpus
 
@@ -132,42 +130,42 @@ def split_by_sentence(text: str) -> list:
         for letter in text:
             if letter not in prohibited_marks and letter != '!' and letter != '?':
                 new += letter
-            elif letter == '!' or letter == '?':
+            elif letter in ('!', '?'):
                 new += '.'
-        x = new.split()
-        final = ' '.join(x)
+        split_1 = new.split()
+        final = ' '.join(split_1)
         edit_text = []
         s_first = '<s>'
         s_last = '</s>'
         new_splitted = final.split('. ')
-        for i, el in enumerate(new_splitted):
-            if el[0].isupper():
-                b = ''
-                b += el.lower()
-                edit_text.append(b.split())
-            elif el[0].islower():
-                b = ''
-                b += el.lower()
+        for i, element in enumerate(new_splitted):
+            if element[0].isupper():
+                sth = ''
+                sth += element.lower()
+                edit_text.append(sth.split())
+            elif element[0].islower():
+                sth = ''
+                sth += element.lower()
                 if i > 0:
                     length = len(edit_text)
                     edit_text[length - 1].extend(b.split())
-        for i, el in enumerate(edit_text):
-            el.insert(0, s_first)
-            el.append(s_last)
+        for i, element in enumerate(edit_text):
+            element.insert(0, s_first)
+            element.append(s_last)
         if edit_text[-1][-2]:
             edit_text[-1][-2] = edit_text[-1][-2][:-1]
         return edit_text
     return []
 
 
-# s = WordStorage
-# l = NGramTrie
-# sentences = split_by_sentence(REFERENCE_TEXT)
-# for sent in sentences:
-#    for word_ in sent:
-    #    s.put(word_)
-# sentences1 = encode(s, sentences)
-# for sent in sentences1:
-#    l.fill_from_sentence(sent)
-# l.calculate_log_probabilities()
-# l.predict_next_sentence((''))
+s = WordStorage
+l = NGramTrie
+sentences = split_by_sentence(REFERENCE_TEXT)
+for sent in sentences:
+    for word_ in sent:
+        s.put(word_)
+sentences1 = encode(s, sentences)
+for sent in sentences1:
+    l.fill_from_sentence(sent)
+l.calculate_log_probabilities()
+l.predict_next_sentence((''))
