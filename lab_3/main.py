@@ -16,21 +16,15 @@ class WordStorage:
         self.storage = {}
 
     def put(self, word: str) -> int:
-        number = 0
         if isinstance(word, str) and word not in self.storage:
-            if word not in self.storage:
-                self.storage[word] = number
-        return self.storage.get(word)
+            self.storage[word] = len(self.storage)
+            return self.storage[word]
+        return -1
 
     def get_id_of(self, word: str) -> int:
-        if isinstance(word, str):
-            for key, value in self.storage.items():
-                if key == word:
-                    return value
-                else:
-                    return -1
-        else:
-            return -1
+        if word in self.storage:
+            return self.storage.get(word)
+        return -1
 
     def get_original_by(self, id1: int) -> str:
         if isinstance(id1, int):
@@ -44,37 +38,31 @@ class WordStorage:
 
     def from_corpus(self, corpus: tuple):
         if isinstance(corpus, tuple):
-            count = 0
-            for word in corpus:
-                self.storage[word] = count
-                count += 1
-        else:
-            return -1
-        return corpus
+            for elem in corpus:
+                self.put(elem)
+            return self.storage
 
 
 class NGramTrie:
-    def __init__(self, size):
-        self.size = size
+    def __init__(self, n):
+        self.size = n
         self.gram_frequencies = {}
         self.gram_log_probabilities = {}
 
     def fill_from_sentence(self, sentence: tuple) -> str:
-        # if self.size == 3:
         if isinstance(sentence, tuple):
             new_sent = list(sentence)
-            keys_freq = []
-            for i in range(len(new_sent) - 1):
-                if i != len(new_sent) - (self.size - 1):
-                    n_gram = []
-                    counter = 0
-                    while counter < self.size:
-                        n_gram.append(new_sent[i + counter])
-                        counter += 1
-                    n_gram = tuple(n_gram)
-                    keys_freq.append(n_gram)
-                    print(n_gram)
-            self.gram_frequencies = dict((n_gram, keys_freq.count(n_gram)) for n_gram in keys_freq)
+            for i, n in enumerate(new_sent[:-self.size + 1]):
+                n_gram = []
+                counter = 0
+                while counter < self.size:
+                    n_gram.append(new_sent[i + counter])
+                    counter += 1
+                n_gram = tuple(n_gram)
+                if n_gram in self.gram_frequencies.keys():
+                    self.gram_frequencies[n_gram] += 1
+                else:
+                    self.gram_frequencies[n_gram] = 1
             return 'OK'
         else:
             return 'Error'
@@ -82,15 +70,15 @@ class NGramTrie:
     def calculate_log_probabilities(self):
         my_dict = {}
         for trie_gram, freq in self.gram_frequencies.items():
-            if trie_gram[:-1] not in my_dict:
-                my_dict[trie_gram[:-1]] = freq
+            if trie_gram[:self.size - 1] not in my_dict:
+                my_dict[trie_gram[:self.size - 1]] = freq
             else:
-                my_dict[trie_gram[:-1]] += freq
+                my_dict[trie_gram[:self.size - 1]] += freq
         for trie_gram, freq in self.gram_frequencies.items():
-            res = freq / my_dict[trie_gram[:-1]]
-            self.gram_log_probabilities[trie_gram] = math.log(res)
-        print(self.gram_log_probabilities)
-        return self.gram_log_probabilities
+            if trie_gram not in self.gram_log_probabilities:
+                res = freq / my_dict[trie_gram[:self.size - 1]]
+                self.gram_log_probabilities[trie_gram] = math.log(res)
+        #return self.gram_log_probabilities
 
     def predict_next_sentence(self, prefix: tuple) -> list:
         word_1 = []
@@ -117,12 +105,14 @@ class NGramTrie:
 
 
 def encode(storage_instance, corpus) -> list:
+    code = []
     for sentence in corpus:
-        for i, element in enumerate(sentence):
-            for keyword, ind in storage_instance.items():
-                if element == keyword:
-                    sentence[i] = ind
-    return corpus
+        code1 = []
+        for element in sentence:
+            element = storage_instance.get_id_of(element)
+            code1.append(element)
+        code.append(code1)
+    return code
 
 
 def split_by_sentence(text: str) -> list:
@@ -150,7 +140,7 @@ def split_by_sentence(text: str) -> list:
                 sth += element.lower()
                 if i > 0:
                     length = len(edit_text)
-                    edit_text[length - 1].extend(b.split())
+                    edit_text[length - 1].extend(sth.split())
         for i, element in enumerate(edit_text):
             element.insert(0, s_first)
             element.append(s_last)
@@ -160,14 +150,24 @@ def split_by_sentence(text: str) -> list:
     return []
 
 
-s = WordStorage
-NGr = NGramTrie
-# sentences = split_by_sentence(REFERENCE_TEXT)
-# for sent in sentences:
-  #  for word_ in sent:
-   #     s.put(word_)
-# sentences1 = encode(s, sentences)
-# for sent in sentences1:
-#    NGr.fill_from_sentence(sent)
-# NGr.calculate_log_probabilities()
-# NGr.predict_next_sentence((''))
+WSt = WordStorage()
+NGr = NGramTrie(5)
+sentences = split_by_sentence(REFERENCE_TEXT)
+for sent in sentences:
+    for word_ in sent:
+        WSt.put(word_)
+sentences1 = encode(WSt, sentences)
+for sent in sentences1:
+    NGr.fill_from_sentence(tuple(sent))
+NGr.calculate_log_probabilities()
+prefix1 = 'But as soon as'
+pref_lst = prefix1.split()
+pref_num = []
+for pref in pref_lst:
+    pref_num.append(WSt.get_id_of(pref))
+print(pref_num)
+numbers_res = NGr.predict_next_sentence(tuple(pref_num))
+fin = []
+for number in numbers_res:
+    fin.append(WSt.get_original_by(number))
+print(fin)
