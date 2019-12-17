@@ -50,7 +50,8 @@ class TfIdfCalculator:
                             word_count = text1.count(word)
                             tf[word] = word_count / text_length
                     self.tf_values.append(tf)
-        return self.tf_values
+        print(self.tf_values)
+        #return self.tf_values
 
     def calculate_idf(self):
         if self.corpus:
@@ -70,7 +71,8 @@ class TfIdfCalculator:
                 for word in count_freq.keys():
                     if count_freq.get(word) != 0:
                         self.idf_values[word] = log(texts_count / count_freq.get(word))
-        return self.idf_values
+        print(self.idf_values)
+        #return self.idf_values
 
     def calculate(self):
         if self.tf_values and self.idf_values:
@@ -79,7 +81,7 @@ class TfIdfCalculator:
                 for word, tf in text1.items():
                     tf_idf_value[word] = tf * self.idf_values[word]
                 self.tf_idf_values.append(tf_idf_value)
-        return self.tf_idf_values
+        #return self.tf_idf_values
 
     def report_on(self, word, document_index):
         try:
