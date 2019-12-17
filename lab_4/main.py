@@ -46,9 +46,9 @@ class TfIdfCalculator:
                         if not isinstance(word, str):
                             text_length -= 1
                     for word in text1:
-                        if isinstance(word, str) and word not in tf:
+                        if isinstance(word, str) and word not in tf_dict:
                             word_count = text1.count(word)
-                            tf_dict[word] = word_count / text_length
+                            tf[word] = word_count / text_length
                     self.tf_values.append(tf)
 
     def calculate_idf(self):
