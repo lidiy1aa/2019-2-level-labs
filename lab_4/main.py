@@ -48,8 +48,8 @@ class TfIdfCalculator:
                     for word in text1:
                         if isinstance(word, str) and word not in tf_dict:
                             word_count = text1.count(word)
-                            tf[word] = word_count / text_length
-                    self.tf_values.append(tf)
+                            tf_dict[word] = word_count / text_length
+                    self.tf_values.append(tf_dict)
 
     def calculate_idf(self):
         if self.corpus:
